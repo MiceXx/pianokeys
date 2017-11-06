@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Piano</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body>
+        <div class="upperkeys">
+            <div data-key="87" class="upperkey">
+              <kbd>W</kbd>
+              <span class="sound">B &#9837</span>
+            </div>
+            <div data-key="69" class="upperkey">
+              <kbd>E</kbd>
+              <span class="sound">C &#9839</span>
+            </div>
+            <div data-key="82" class="upperkey">
+              <kbd>R</kbd>
+              <span class="sound">E &#9837</span>
+            </div>
+            <div data-key="84" class="upperkey">
+              <kbd>T</kbd>
+              <span class="sound">F &#9839</span>
+            </div>
+            <div data-key="89" class="upperkey">
+              <kbd>Y</kbd>
+              <span class="sound">G &#9839</span>
+            </div>
+        </div>
+        
+        <div class="keys">
+            <div data-key="65" class="key">
+              <kbd>A</kbd>
+              <span class="sound">A</span>
+            </div>
+            <div data-key="83" class="key">
+              <kbd>S</kbd>
+              <span class="sound">B</span>
+            </div>
+            <div data-key="68" class="key">
+              <kbd>D</kbd>
+              <span class="sound">C</span>
+            </div>
+            <div data-key="70" class="key">
+              <kbd>F</kbd>
+              <span class="sound">D</span>
+            </div>
+            <div data-key="71" class="key">
+              <kbd>G</kbd>
+              <span class="sound">E</span>
+            </div>
+            <div data-key="72" class="key">
+              <kbd>H</kbd>
+              <span class="sound">F</span>
+            </div>
+            <div data-key="74" class="key">
+              <kbd>J</kbd>
+              <span class="sound">G</span>
+            </div>
+        </div>
+
+        <audio data-key="65" src="sounds/piano-a.wav"></audio>
+        <audio data-key="83" src="sounds/piano-b.wav"></audio>
+        <audio data-key="68" src="sounds/piano-c.wav"></audio>
+        <audio data-key="70" src="sounds/piano-d.wav"></audio>
+        <audio data-key="71" src="sounds/piano-e.wav"></audio>
+        <audio data-key="72" src="sounds/piano-f.wav"></audio>
+        <audio data-key="74" src="sounds/piano-g.wav"></audio>
+
+        <audio data-key="87" src="sounds/piano-bb.wav"></audio>
+        <audio data-key="69" src="sounds/piano-cs.wav"></audio>
+        <audio data-key="82" src="sounds/piano-eb.wav"></audio>
+        <audio data-key="84" src="sounds/piano-fs.wav"></audio>
+        <audio data-key="89" src="sounds/piano-gs.wav"></audio>
+
+    <script>
+        function removeTransition(e) {
+            if (e.propertyName !== 'transform') return;
+            e.target.classList.remove('playing');
+        }
+
+        function playSound(e) {
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+            if (!audio) return;
+
+            key.classList.add('playing');
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        const keys = Array.from(document.querySelectorAll('.key'));
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+        window.addEventListener('keydown', playSound);
+    </script>
+    
+    </body>
+    
+</html>
